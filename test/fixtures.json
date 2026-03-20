@@ -1,0 +1,761 @@
+{
+  "description": "Test fixtures for the Behaviour Intelligence System. Each fixture provides session data and expected classification output.",
+  "fixtures": [
+    {
+      "id": "mismatch-bounce",
+      "description": "Single-page bounce. No engagement. Classic Mismatch.",
+      "sessionData": {
+        "breadthMetrics": { "uniquePages": 1, "uniquePageTypes": 1, "uniqueTopics": 1 },
+        "depthMetrics": { "engagementTimeSeconds": 5, "avgScrollPercent": 10, "deepEngagementEvents": 0 },
+        "events": [
+          { "eventName": "page_view", "pageType": "homepage" }
+        ],
+        "clusteringMetrics": { "dominantTopicShare": 1.0, "topicSwitchCount": 0, "repeatClusterVisits": 0, "totalPageViews": 1 },
+        "trafficSource": "social_media"
+      },
+      "userHistory": [],
+      "expected": {
+        "state": "Mismatch",
+        "confidenceBand": "low",
+        "lifecyclePhase": "acquisition",
+        "motivation": null
+      }
+    },
+    {
+      "id": "scanner-lost-user",
+      "description": "Wide, shallow, scattered browsing. Many pages, no engagement depth.",
+      "sessionData": {
+        "breadthMetrics": { "uniquePages": 8, "uniquePageTypes": 5, "uniqueTopics": 4 },
+        "depthMetrics": { "engagementTimeSeconds": 18, "avgScrollPercent": 25, "deepEngagementEvents": 0 },
+        "events": [
+          { "eventName": "page_view", "pageType": "homepage" },
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "page_view", "pageType": "blog" },
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "page_view", "pageType": "about" },
+          { "eventName": "page_view", "pageType": "blog" },
+          { "eventName": "page_view", "pageType": "pricing" },
+          { "eventName": "page_view", "pageType": "service" }
+        ],
+        "clusteringMetrics": { "dominantTopicShare": 0.3, "topicSwitchCount": 5, "repeatClusterVisits": 1, "totalPageViews": 8 },
+        "trafficSource": "social_media"
+      },
+      "userHistory": [],
+      "expected": {
+        "state": "Scanner",
+        "confidenceBand": "low",
+        "lifecyclePhase": "acquisition",
+        "motivation": null
+      }
+    },
+    {
+      "id": "explorer-emerging",
+      "description": "Moderate breadth/depth but no progression; currently maps to Stalled under priority rules.",
+      "sessionData": {
+        "breadthMetrics": { "uniquePages": 5, "uniquePageTypes": 3, "uniqueTopics": 2 },
+        "depthMetrics": { "engagementTimeSeconds": 75, "avgScrollPercent": 60, "deepEngagementEvents": 0 },
+        "events": [
+          { "eventName": "page_view", "pageType": "homepage" },
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "page_view", "pageType": "blog" },
+          { "eventName": "page_view", "pageType": "case_study" },
+          { "eventName": "scroll_75", "pageType": "service" }
+        ],
+        "clusteringMetrics": { "dominantTopicShare": 0.5, "topicSwitchCount": 2, "repeatClusterVisits": 2, "totalPageViews": 5 },
+        "trafficSource": "organic_search"
+      },
+      "userHistory": [],
+      "expected": {
+        "state": "Stalled",
+        "confidenceBand": "low",
+        "lifecyclePhase": "evaluation",
+        "motivation": null
+      }
+    },
+    {
+      "id": "evaluator-deep",
+      "description": "Deep engagement with clustered content. CTA click on service page.",
+      "sessionData": {
+        "breadthMetrics": { "uniquePages": 4, "uniquePageTypes": 3, "uniqueTopics": 2 },
+        "depthMetrics": { "engagementTimeSeconds": 150, "avgScrollPercent": 85, "deepEngagementEvents": 1 },
+        "events": [
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "page_view", "pageType": "case_study" },
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "page_view", "pageType": "pricing" },
+          { "eventName": "scroll_75", "pageType": "case_study" },
+          { "eventName": "cta_click", "pageType": "service" },
+          { "eventName": "resource_download", "pageType": "case_study" }
+        ],
+        "clusteringMetrics": { "dominantTopicShare": 0.75, "topicSwitchCount": 1, "repeatClusterVisits": 3, "totalPageViews": 4 },
+        "trafficSource": "organic_search"
+      },
+      "userHistory": [],
+      "expected": {
+        "state": "Evaluator",
+        "confidenceBand": "low",
+        "lifecyclePhase": "evaluation",
+        "subType": "proof-focused"
+      }
+    },
+    {
+      "id": "focused-evaluator",
+      "description": "Narrow, deep, high progression on a single topic; Hesitant overrides Focused Evaluator by priority.",
+      "sessionData": {
+        "breadthMetrics": { "uniquePages": 3, "uniquePageTypes": 2, "uniqueTopics": 1 },
+        "depthMetrics": { "engagementTimeSeconds": 240, "avgScrollPercent": 90, "deepEngagementEvents": 2 },
+        "events": [
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "page_view", "pageType": "pricing" },
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "scroll_75", "pageType": "service" },
+          { "eventName": "scroll_75", "pageType": "pricing" },
+          { "eventName": "cta_click", "pageType": "pricing" },
+          { "eventName": "form_start", "pageType": "contact" },
+          { "eventName": "resource_download", "pageType": "service" }
+        ],
+        "clusteringMetrics": { "dominantTopicShare": 0.9, "topicSwitchCount": 0, "repeatClusterVisits": 2, "totalPageViews": 3 },
+        "trafficSource": "direct"
+      },
+      "userHistory": [],
+      "expected": {
+        "state": "Hesitant",
+        "confidenceBand": "high",
+        "lifecyclePhase": "evaluation",
+        "motivation": "urgency-driven"
+      }
+    },
+    {
+      "id": "hesitant-form-dropout",
+      "description": "Started a form but didn't submit. High intent, no completion.",
+      "sessionData": {
+        "breadthMetrics": { "uniquePages": 5, "uniquePageTypes": 3, "uniqueTopics": 2 },
+        "depthMetrics": { "engagementTimeSeconds": 180, "avgScrollPercent": 80, "deepEngagementEvents": 0 },
+        "events": [
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "page_view", "pageType": "case_study" },
+          { "eventName": "page_view", "pageType": "pricing" },
+          { "eventName": "page_view", "pageType": "contact" },
+          { "eventName": "scroll_75", "pageType": "contact" },
+          { "eventName": "cta_click", "pageType": "pricing" },
+          { "eventName": "form_start", "pageType": "contact" }
+        ],
+        "clusteringMetrics": { "dominantTopicShare": 0.6, "topicSwitchCount": 2, "repeatClusterVisits": 2, "totalPageViews": 5 },
+        "trafficSource": "paid_search"
+      },
+      "userHistory": [],
+      "expected": {
+        "state": "Hesitant",
+        "confidenceBand": "high",
+        "lifecyclePhase": "evaluation",
+        "motivation": "risk-sensitive"
+      }
+    },
+    {
+      "id": "engaged-converted",
+      "description": "Completed conversion. Post-action browsing.",
+      "sessionData": {
+        "breadthMetrics": { "uniquePages": 6, "uniquePageTypes": 4, "uniqueTopics": 2 },
+        "depthMetrics": { "engagementTimeSeconds": 300, "avgScrollPercent": 75, "deepEngagementEvents": 1 },
+        "events": [
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "page_view", "pageType": "pricing" },
+          { "eventName": "page_view", "pageType": "contact" },
+          { "eventName": "cta_click", "pageType": "pricing" },
+          { "eventName": "form_start", "pageType": "contact" },
+          { "eventName": "form_submit", "pageType": "contact" },
+          { "eventName": "conversion_complete", "pageType": "confirmation" },
+          { "eventName": "page_view", "pageType": "about" }
+        ],
+        "clusteringMetrics": { "dominantTopicShare": 0.65, "topicSwitchCount": 2, "repeatClusterVisits": 2, "totalPageViews": 6 },
+        "trafficSource": "direct"
+      },
+      "userHistory": [],
+      "expected": {
+        "state": "Engaged",
+        "confidenceBand": "high",
+        "lifecyclePhase": "retention"
+      }
+    },
+    {
+      "id": "returning-evaluator-3-sessions",
+      "description": "3 sessions over 5 days with increasing depth/progression; current priority still resolves to Hesitant.",
+      "sessionData": {
+        "breadthMetrics": { "uniquePages": 4, "uniquePageTypes": 3, "uniqueTopics": 2 },
+        "depthMetrics": { "engagementTimeSeconds": 180, "avgScrollPercent": 80, "deepEngagementEvents": 1 },
+        "events": [
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "page_view", "pageType": "case_study" },
+          { "eventName": "page_view", "pageType": "pricing" },
+          { "eventName": "scroll_75", "pageType": "case_study" },
+          { "eventName": "cta_click", "pageType": "pricing" },
+          { "eventName": "form_start", "pageType": "contact" },
+          { "eventName": "resource_download", "pageType": "case_study" }
+        ],
+        "clusteringMetrics": { "dominantTopicShare": 0.7, "topicSwitchCount": 1, "repeatClusterVisits": 3, "totalPageViews": 4 },
+        "trafficSource": "direct"
+      },
+      "userHistory": [
+        {
+          "sessionDate": "2026-03-14",
+          "state": "Explorer",
+          "breadth": 5, "depth": 4, "progression": 2, "clustering": 4,
+          "conversionComplete": false
+        },
+        {
+          "sessionDate": "2026-03-16",
+          "state": "Evaluator",
+          "breadth": 4, "depth": 6, "progression": 4, "clustering": 6,
+          "conversionComplete": false
+        }
+      ],
+      "expected": {
+        "state": "Hesitant",
+        "confidenceBand": "high",
+        "lifecyclePhase": "evaluation",
+        "temporal": { "trend": "reinforcing" }
+      }
+    },
+    {
+      "id": "stalled-looping",
+      "description": "Moderate engagement but stuck in loops. No forward progression.",
+      "sessionData": {
+        "breadthMetrics": { "uniquePages": 5, "uniquePageTypes": 3, "uniqueTopics": 2 },
+        "depthMetrics": { "engagementTimeSeconds": 90, "avgScrollPercent": 55, "deepEngagementEvents": 0 },
+        "events": [
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "page_view", "pageType": "blog" },
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "page_view", "pageType": "blog" },
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "scroll_75", "pageType": "service" }
+        ],
+        "clusteringMetrics": { "dominantTopicShare": 0.6, "topicSwitchCount": 3, "repeatClusterVisits": 2, "totalPageViews": 5 },
+        "trafficSource": "organic_search"
+      },
+      "userHistory": [],
+      "expected": {
+        "state": "Stalled",
+        "confidenceBand": "low",
+        "lifecyclePhase": "evaluation"
+      }
+    },
+    {
+      "id": "stalled-friction",
+      "description": "Stalled with friction signals: rage clicks and form errors.",
+      "sessionData": {
+        "breadthMetrics": { "uniquePages": 4, "uniquePageTypes": 3, "uniqueTopics": 2 },
+        "depthMetrics": { "engagementTimeSeconds": 120, "avgScrollPercent": 70, "deepEngagementEvents": 0 },
+        "events": [
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "page_view", "pageType": "pricing" },
+          { "eventName": "page_view", "pageType": "contact" },
+          { "eventName": "page_view", "pageType": "contact" },
+          { "eventName": "scroll_75", "pageType": "contact" }
+        ],
+        "clusteringMetrics": { "dominantTopicShare": 0.5, "topicSwitchCount": 2, "repeatClusterVisits": 2, "totalPageViews": 4 },
+        "trafficSource": "organic_search",
+        "frictionSignals": {
+          "rageClickCount": 5,
+          "deadClickCount": 3,
+          "formErrorCount": 4,
+          "highLayoutShift": false
+        }
+      },
+      "userHistory": [],
+      "expected": {
+        "state": "Stalled (Friction)",
+        "confidenceBand": "low",
+        "lifecyclePhase": "evaluation"
+      }
+    },
+    {
+      "id": "comparator-multi-pathway",
+      "description": "Moderate multi-pathway browsing but progression/clustering thresholds currently map to Explorer.",
+      "sessionData": {
+        "breadthMetrics": { "uniquePages": 6, "uniquePageTypes": 3, "uniqueTopics": 3 },
+        "depthMetrics": { "engagementTimeSeconds": 60, "avgScrollPercent": 65, "deepEngagementEvents": 0 },
+        "events": [
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "page_view", "pageType": "pricing" },
+          { "eventName": "page_view", "pageType": "case_study" },
+          { "eventName": "page_view", "pageType": "pricing" },
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "scroll_75", "pageType": "pricing" },
+          { "eventName": "cta_click", "pageType": "service" }
+        ],
+        "clusteringMetrics": { "dominantTopicShare": 0.55, "topicSwitchCount": 3, "repeatClusterVisits": 2, "totalPageViews": 6 },
+        "trafficSource": "paid_search"
+      },
+      "userHistory": [],
+      "expected": {
+        "state": "Explorer",
+        "confidenceBand": "medium",
+        "lifecyclePhase": "acquisition"
+      }
+    },
+    {
+      "id": "focused-evaluator-positive",
+      "description": "Narrow, deep, high progression. Hesitant does not trigger because conversionComplete=true in temporal history.",
+      "sessionData": {
+        "breadthMetrics": { "uniquePages": 3, "uniquePageTypes": 2, "uniqueTopics": 1 },
+        "depthMetrics": { "engagementTimeSeconds": 250, "avgScrollPercent": 92, "deepEngagementEvents": 2 },
+        "events": [
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "page_view", "pageType": "pricing" },
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "scroll_75", "pageType": "service" },
+          { "eventName": "scroll_75", "pageType": "pricing" },
+          { "eventName": "cta_click", "pageType": "pricing" },
+          { "eventName": "form_start", "pageType": "contact" },
+          { "eventName": "resource_download", "pageType": "service" }
+        ],
+        "clusteringMetrics": { "dominantTopicShare": 0.9, "topicSwitchCount": 0, "repeatClusterVisits": 2, "totalPageViews": 3 },
+        "trafficSource": "direct"
+      },
+      "userHistory": [
+        {
+          "sessionDate": "2026-03-15",
+          "state": "Engaged",
+          "breadth": 5, "depth": 7, "progression": 9, "clustering": 6,
+          "conversionComplete": true
+        }
+      ],
+      "expected": {
+        "state": "Focused Evaluator",
+        "confidenceBand": "high",
+        "lifecyclePhase": "evaluation"
+      }
+    },
+    {
+      "id": "comparator-positive",
+      "description": "Multi-pathway evaluation. Breadth 5, depth 5, clustering 6, progression 4. Matches Comparator criteria.",
+      "sessionData": {
+        "breadthMetrics": { "uniquePages": 5, "uniquePageTypes": 3, "uniqueTopics": 3 },
+        "depthMetrics": { "engagementTimeSeconds": 70, "avgScrollPercent": 60, "deepEngagementEvents": 0 },
+        "events": [
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "page_view", "pageType": "pricing" },
+          { "eventName": "page_view", "pageType": "case_study" },
+          { "eventName": "page_view", "pageType": "pricing" },
+          { "eventName": "scroll_75", "pageType": "pricing" },
+          { "eventName": "cta_click", "pageType": "service" },
+          { "eventName": "cta_click", "pageType": "pricing" }
+        ],
+        "clusteringMetrics": { "dominantTopicShare": 0.6, "topicSwitchCount": 1, "repeatClusterVisits": 2, "totalPageViews": 5 },
+        "trafficSource": "paid_search"
+      },
+      "userHistory": [],
+      "expected": {
+        "state": "Comparator",
+        "confidenceBand": "medium",
+        "lifecyclePhase": "evaluation"
+      }
+    },
+    {
+      "id": "returning-evaluator-positive",
+      "description": "3 sessions (2 history + current) over 5 days with non-decreasing signals. Progression < 6 so Hesitant does not override. Temporal state: Returning Evaluator.",
+      "sessionData": {
+        "breadthMetrics": { "uniquePages": 4, "uniquePageTypes": 3, "uniqueTopics": 2 },
+        "depthMetrics": { "engagementTimeSeconds": 120, "avgScrollPercent": 75, "deepEngagementEvents": 1 },
+        "events": [
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "page_view", "pageType": "case_study" },
+          { "eventName": "page_view", "pageType": "pricing" },
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "scroll_75", "pageType": "case_study" },
+          { "eventName": "cta_click", "pageType": "pricing" },
+          { "eventName": "resource_download", "pageType": "case_study" },
+          { "eventName": "resource_download", "pageType": "service" }
+        ],
+        "clusteringMetrics": { "dominantTopicShare": 0.7, "topicSwitchCount": 1, "repeatClusterVisits": 3, "totalPageViews": 4 },
+        "trafficSource": "direct"
+      },
+      "userHistory": [
+        {
+          "sessionDate": "2026-03-14",
+          "state": "Explorer",
+          "breadth": 5, "depth": 3, "progression": 2, "clustering": 3,
+          "conversionComplete": false
+        },
+        {
+          "sessionDate": "2026-03-16",
+          "state": "Evaluator",
+          "breadth": 4, "depth": 5, "progression": 4, "clustering": 5,
+          "conversionComplete": false
+        }
+      ],
+      "expected": {
+        "state": "Returning Evaluator",
+        "confidenceBand": "high",
+        "lifecyclePhase": "retention",
+        "temporalState": "Returning Evaluator"
+      }
+    },
+    {
+      "id": "persistent-hesitation",
+      "description": "2 prior Hesitant sessions within 14 days, current session has decaying signals. Temporal state: Persistent Hesitation. Classifier assigns Stalled from current signals.",
+      "sessionData": {
+        "breadthMetrics": { "uniquePages": 4, "uniquePageTypes": 3, "uniqueTopics": 2 },
+        "depthMetrics": { "engagementTimeSeconds": 80, "avgScrollPercent": 65, "deepEngagementEvents": 0 },
+        "events": [
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "page_view", "pageType": "pricing" },
+          { "eventName": "page_view", "pageType": "blog" },
+          { "eventName": "scroll_75", "pageType": "service" },
+          { "eventName": "cta_click", "pageType": "service" },
+          { "eventName": "resource_download", "pageType": "service" }
+        ],
+        "clusteringMetrics": { "dominantTopicShare": 0.6, "topicSwitchCount": 2, "repeatClusterVisits": 2, "totalPageViews": 4 },
+        "trafficSource": "organic_search"
+      },
+      "userHistory": [
+        {
+          "sessionDate": "2026-03-12",
+          "state": "Hesitant",
+          "breadth": 5, "depth": 6, "progression": 6, "clustering": 5,
+          "conversionComplete": false
+        },
+        {
+          "sessionDate": "2026-03-15",
+          "state": "Hesitant",
+          "breadth": 5, "depth": 5, "progression": 5, "clustering": 4,
+          "conversionComplete": false
+        }
+      ],
+      "expected": {
+        "state": "Stalled",
+        "confidenceBand": "medium",
+        "lifecyclePhase": "evaluation",
+        "temporalState": "Persistent Hesitation"
+      }
+    },
+    {
+      "id": "chronic-stall",
+      "description": "3 prior Stalled sessions within 30 days with decaying trend. Temporal state: Chronic Stall. Current signals still match Stalled.",
+      "sessionData": {
+        "breadthMetrics": { "uniquePages": 5, "uniquePageTypes": 3, "uniqueTopics": 2 },
+        "depthMetrics": { "engagementTimeSeconds": 80, "avgScrollPercent": 65, "deepEngagementEvents": 0 },
+        "events": [
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "page_view", "pageType": "blog" },
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "page_view", "pageType": "blog" },
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "scroll_75", "pageType": "service" },
+          { "eventName": "cta_click", "pageType": "homepage" }
+        ],
+        "clusteringMetrics": { "dominantTopicShare": 0.5, "topicSwitchCount": 2, "repeatClusterVisits": 1, "totalPageViews": 5 },
+        "trafficSource": "organic_search"
+      },
+      "userHistory": [
+        {
+          "sessionDate": "2026-02-25",
+          "state": "Stalled",
+          "breadth": 5, "depth": 5, "progression": 2, "clustering": 4,
+          "conversionComplete": false
+        },
+        {
+          "sessionDate": "2026-03-05",
+          "state": "Stalled",
+          "breadth": 4, "depth": 5, "progression": 2, "clustering": 4,
+          "conversionComplete": false
+        },
+        {
+          "sessionDate": "2026-03-12",
+          "state": "Stalled",
+          "breadth": 5, "depth": 4, "progression": 1, "clustering": 3,
+          "conversionComplete": false
+        }
+      ],
+      "expected": {
+        "state": "Stalled",
+        "confidenceBand": "medium",
+        "lifecyclePhase": "evaluation",
+        "temporalState": "Chronic Stall"
+      }
+    },
+    {
+      "id": "element-weight-boost",
+      "description": "Element-level weight on CTA boosts progression. Button has element_weight 2.0 on a blog page (page_weight 0.6). Without element weights this session would classify as Explorer (p=4).",
+      "sessionData": {
+        "breadthMetrics": { "uniquePages": 4, "uniquePageTypes": 3, "uniqueTopics": 2 },
+        "depthMetrics": { "engagementTimeSeconds": 90, "avgScrollPercent": 70, "deepEngagementEvents": 0 },
+        "events": [
+          { "eventName": "page_view", "pageType": "blog" },
+          { "eventName": "page_view", "pageType": "blog" },
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "page_view", "pageType": "pricing" },
+          { "eventName": "scroll_75", "pageType": "blog" },
+          { "eventName": "cta_click", "pageType": "blog", "elementRole": "progression", "elementWeight": 2.0 },
+          { "eventName": "form_start", "pageType": "contact", "elementRole": "progression", "elementWeight": 2.0 },
+          { "eventName": "resource_download", "pageType": "service" }
+        ],
+        "clusteringMetrics": { "dominantTopicShare": 0.5, "topicSwitchCount": 2, "repeatClusterVisits": 1, "totalPageViews": 4 },
+        "trafficSource": "organic_search"
+      },
+      "userHistory": [],
+      "expected": {
+        "state": "Hesitant",
+        "confidenceBand": "high",
+        "lifecyclePhase": "evaluation"
+      }
+    },
+    {
+      "id": "element-weight-absent-regression",
+      "description": "No element metadata — regression test. Same events as element-weight-boost but without element weights. Falls back to page-level weights, producing lower progression (p=4 vs p=6) and a lower-intent classification.",
+      "sessionData": {
+        "breadthMetrics": { "uniquePages": 4, "uniquePageTypes": 3, "uniqueTopics": 2 },
+        "depthMetrics": { "engagementTimeSeconds": 90, "avgScrollPercent": 70, "deepEngagementEvents": 0 },
+        "events": [
+          { "eventName": "page_view", "pageType": "blog" },
+          { "eventName": "page_view", "pageType": "blog" },
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "page_view", "pageType": "pricing" },
+          { "eventName": "scroll_75", "pageType": "blog" },
+          { "eventName": "cta_click", "pageType": "blog" },
+          { "eventName": "form_start", "pageType": "contact" },
+          { "eventName": "resource_download", "pageType": "service" }
+        ],
+        "clusteringMetrics": { "dominantTopicShare": 0.5, "topicSwitchCount": 2, "repeatClusterVisits": 1, "totalPageViews": 4 },
+        "trafficSource": "organic_search"
+      },
+      "userHistory": [],
+      "expected": {
+        "state": "Explorer",
+        "confidenceBand": "high",
+        "lifecyclePhase": "acquisition"
+      }
+    },
+    {
+      "id": "re-engaged-prospect",
+      "description": "User had a session 48 days ago then returns now with medium-high clustering (0.7 raw → c=7) and progression (CTA click + form_start on contact → p=6 with direct bias). Temporal gap >= 30 days triggers Re-engaged Prospect detection. Classifier assigns Hesitant (p=6, d=5, no conversion).",
+      "sessionData": {
+        "breadthMetrics": { "uniquePages": 4, "uniquePageTypes": 3, "uniqueTopics": 2 },
+        "depthMetrics": { "engagementTimeSeconds": 90, "avgScrollPercent": 70, "deepEngagementEvents": 0 },
+        "events": [
+          { "eventName": "page_view", "pageType": "homepage" },
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "page_view", "pageType": "contact" },
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "scroll_75", "pageType": "service" },
+          { "eventName": "cta_click", "pageType": "contact" },
+          { "eventName": "form_start", "pageType": "contact" }
+        ],
+        "clusteringMetrics": { "dominantTopicShare": 0.7, "topicSwitchCount": 1, "repeatClusterVisits": 2, "totalPageViews": 4 },
+        "trafficSource": "direct"
+      },
+      "userHistory": [
+        {
+          "sessionDate": "2026-01-30",
+          "state": "Scanner",
+          "breadth": 7, "depth": 2, "progression": 0, "clustering": 2,
+          "conversionComplete": false
+        }
+      ],
+      "expected": {
+        "state": "Hesitant",
+        "confidenceBand": "medium",
+        "lifecyclePhase": "evaluation",
+        "temporalState": "Re-engaged Prospect"
+      }
+    },
+    {
+      "id": "scanner-curiosity-driven",
+      "description": "Wide shallow browsing (9 pages, 5 types, 15s dwell, 20% scroll) from social_media. High topic switching (6) produces very low clustering (0). Breadth=9, depth=3, progression=0 (social bias -1 clamped). Scanner state. Confidence too low (2) for motivation assignment, so curiosity-driven motivation is null.",
+      "sessionData": {
+        "breadthMetrics": { "uniquePages": 9, "uniquePageTypes": 5, "uniqueTopics": 4 },
+        "depthMetrics": { "engagementTimeSeconds": 15, "avgScrollPercent": 20, "deepEngagementEvents": 0 },
+        "events": [
+          { "eventName": "page_view", "pageType": "homepage" },
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "page_view", "pageType": "blog" },
+          { "eventName": "page_view", "pageType": "about" },
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "page_view", "pageType": "blog" },
+          { "eventName": "page_view", "pageType": "case_study" },
+          { "eventName": "page_view", "pageType": "pricing" },
+          { "eventName": "page_view", "pageType": "service" }
+        ],
+        "clusteringMetrics": { "dominantTopicShare": 0.25, "topicSwitchCount": 6, "repeatClusterVisits": 0, "totalPageViews": 9 },
+        "trafficSource": "social_media"
+      },
+      "userHistory": [],
+      "expected": {
+        "state": "Scanner",
+        "confidenceBand": "low",
+        "lifecyclePhase": "acquisition",
+        "motivation": null
+      }
+    },
+    {
+      "id": "evaluator-value-driven",
+      "description": "Deep engagement on case studies (3 case_study page_views, 200s dwell, 85% scroll, 2 deep engagement events → depth=10). Two resource downloads on case_study + one on service + CTA click on service → progression=4. Clustering=8. Evaluator with proof-focused subType (majority time on case_study pages). Confidence medium (6).",
+      "sessionData": {
+        "breadthMetrics": { "uniquePages": 5, "uniquePageTypes": 3, "uniqueTopics": 2 },
+        "depthMetrics": { "engagementTimeSeconds": 200, "avgScrollPercent": 85, "deepEngagementEvents": 2 },
+        "events": [
+          { "eventName": "page_view", "pageType": "case_study" },
+          { "eventName": "page_view", "pageType": "case_study" },
+          { "eventName": "page_view", "pageType": "case_study" },
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "page_view", "pageType": "pricing" },
+          { "eventName": "scroll_75", "pageType": "case_study" },
+          { "eventName": "scroll_75", "pageType": "case_study" },
+          { "eventName": "cta_click", "pageType": "service" },
+          { "eventName": "resource_download", "pageType": "case_study" },
+          { "eventName": "resource_download", "pageType": "case_study" },
+          { "eventName": "resource_download", "pageType": "service" }
+        ],
+        "clusteringMetrics": { "dominantTopicShare": 0.7, "topicSwitchCount": 1, "repeatClusterVisits": 3, "totalPageViews": 5 },
+        "trafficSource": "organic_search",
+        "pageEngagements": [
+          { "pageType": "case_study", "engagementTimeSeconds": 120, "scrollPercent": 90 },
+          { "pageType": "case_study", "engagementTimeSeconds": 50, "scrollPercent": 85 },
+          { "pageType": "service", "engagementTimeSeconds": 20, "scrollPercent": 70 },
+          { "pageType": "pricing", "engagementTimeSeconds": 10, "scrollPercent": 60 }
+        ]
+      },
+      "userHistory": [],
+      "expected": {
+        "state": "Evaluator",
+        "confidenceBand": "medium",
+        "lifecyclePhase": "evaluation",
+        "subType": "proof-focused"
+      }
+    },
+    {
+      "id": "boundary-explorer-stalled",
+      "description": "Right at the Explorer/Stalled boundary. Breadth=5 (5 pages, 3 types), depth=5 (85s base=5, scroll <75%), progression=1 (1 CTA click on homepage × 0.5 weight). Stalled takes priority over Explorer when depth >= 4 and breadth 3-6 and progression <= 3.",
+      "sessionData": {
+        "breadthMetrics": { "uniquePages": 5, "uniquePageTypes": 3, "uniqueTopics": 2 },
+        "depthMetrics": { "engagementTimeSeconds": 85, "avgScrollPercent": 65, "deepEngagementEvents": 0 },
+        "events": [
+          { "eventName": "page_view", "pageType": "homepage" },
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "page_view", "pageType": "blog" },
+          { "eventName": "page_view", "pageType": "blog" },
+          { "eventName": "cta_click", "pageType": "homepage" }
+        ],
+        "clusteringMetrics": { "dominantTopicShare": 0.5, "topicSwitchCount": 2, "repeatClusterVisits": 1, "totalPageViews": 5 },
+        "trafficSource": "organic_search"
+      },
+      "userHistory": [],
+      "expected": {
+        "state": "Stalled",
+        "confidenceBand": "low",
+        "lifecyclePhase": "evaluation"
+      }
+    },
+    {
+      "id": "high-velocity-conversion",
+      "description": "Single session, direct traffic. User goes straight to pricing, clicks CTA, starts and submits form, completes conversion. Progression=10 (capped from 14 raw: cta_click pricing 1.5 + form_start contact 3.0 + form_submit contact 4.0 + conversion_complete confirmation 4.0 + direct bias +1). Depth=9 (120s base=7, scroll 80% +1, deep engagement +1). Engaged state, high confidence.",
+      "sessionData": {
+        "breadthMetrics": { "uniquePages": 3, "uniquePageTypes": 3, "uniqueTopics": 2 },
+        "depthMetrics": { "engagementTimeSeconds": 120, "avgScrollPercent": 80, "deepEngagementEvents": 1 },
+        "events": [
+          { "eventName": "page_view", "pageType": "pricing" },
+          { "eventName": "page_view", "pageType": "contact" },
+          { "eventName": "page_view", "pageType": "confirmation" },
+          { "eventName": "scroll_75", "pageType": "pricing" },
+          { "eventName": "cta_click", "pageType": "pricing" },
+          { "eventName": "form_start", "pageType": "contact" },
+          { "eventName": "form_submit", "pageType": "contact" },
+          { "eventName": "conversion_complete", "pageType": "confirmation" }
+        ],
+        "clusteringMetrics": { "dominantTopicShare": 0.8, "topicSwitchCount": 1, "repeatClusterVisits": 2, "totalPageViews": 3 },
+        "trafficSource": "direct",
+        "timeToFirstHighIntentMs": 45000
+      },
+      "userHistory": [],
+      "expected": {
+        "state": "Engaged",
+        "confidenceBand": "high",
+        "lifecyclePhase": "retention"
+      }
+    },
+    {
+      "id": "referral-depth-boost",
+      "description": "Referral traffic with moderate engagement. The referral source bias config defines depth: +1, which boosts depth from 5 to 6. Referral progression bias is 0, so no boost there. Result: Stalled (b=5, d=6, p=1).",
+      "sessionData": {
+        "breadthMetrics": { "uniquePages": 5, "uniquePageTypes": 3, "uniqueTopics": 2 },
+        "depthMetrics": { "engagementTimeSeconds": 60, "avgScrollPercent": 70, "deepEngagementEvents": 0 },
+        "events": [
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "page_view", "pageType": "blog" },
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "page_view", "pageType": "pricing" },
+          { "eventName": "scroll_75", "pageType": "service" },
+          { "eventName": "cta_click", "pageType": "service" }
+        ],
+        "clusteringMetrics": { "dominantTopicShare": 0.6, "topicSwitchCount": 1, "repeatClusterVisits": 2, "totalPageViews": 5 },
+        "trafficSource": "referral"
+      },
+      "userHistory": [],
+      "expected": {
+        "state": "Stalled",
+        "confidenceBand": "medium",
+        "lifecyclePhase": "evaluation"
+      }
+    },
+    {
+      "id": "overload-sensitive-evaluator",
+      "description": "Deep dwell (150s → base 7, scroll 80% +1 = depth 8), high clustering (10), but progression stuck at 3 (cta_click service 1.0 + form_start service 1.5 + resource_download case_study 0.96 = 3.46 → 3). No priority state matches exactly (depth 8 exceeds Stalled max 6 and Explorer max 6). Falls to fit-based classification → Evaluator (best fit 0.933). Confidence medium (4) with hybrid penalty. Motivation = overload-sensitive (d=8 >= 7, p=3 <= 3, repeatClusterVisits=3 >= 2).",
+      "sessionData": {
+        "breadthMetrics": { "uniquePages": 4, "uniquePageTypes": 2, "uniqueTopics": 2 },
+        "depthMetrics": { "engagementTimeSeconds": 150, "avgScrollPercent": 80, "deepEngagementEvents": 0 },
+        "events": [
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "page_view", "pageType": "case_study" },
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "scroll_75", "pageType": "service" },
+          { "eventName": "scroll_75", "pageType": "case_study" },
+          { "eventName": "cta_click", "pageType": "service" },
+          { "eventName": "form_start", "pageType": "service" },
+          { "eventName": "resource_download", "pageType": "case_study" }
+        ],
+        "clusteringMetrics": { "dominantTopicShare": 0.8, "topicSwitchCount": 0, "repeatClusterVisits": 3, "totalPageViews": 4 },
+        "trafficSource": "organic_search"
+      },
+      "userHistory": [],
+      "expected": {
+        "state": "Evaluator",
+        "confidenceBand": "medium",
+        "lifecyclePhase": "evaluation",
+        "motivation": "overload-sensitive"
+      }
+    },
+    {
+      "id": "element-role-lookup-navigation",
+      "description": "Events where elementRole is 'navigation' (weight 0.3) produce lower progression than default page weights for service pages (1.0). Two CTA clicks with navigation role on service pages contribute 1.0 * 0.3 * 2 = 0.6 → progression rounds to 1 (vs 2.0 without role override). Signals: b=5, d=3, p=1, c=3 → Explorer (depth 3 avoids Stalled which requires depth 4-6).",
+      "sessionData": {
+        "breadthMetrics": { "uniquePages": 5, "uniquePageTypes": 3, "uniqueTopics": 2 },
+        "depthMetrics": { "engagementTimeSeconds": 25, "avgScrollPercent": 50, "deepEngagementEvents": 0 },
+        "events": [
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "page_view", "pageType": "service" },
+          { "eventName": "page_view", "pageType": "blog" },
+          { "eventName": "page_view", "pageType": "blog" },
+          { "eventName": "page_view", "pageType": "pricing" },
+          { "eventName": "cta_click", "pageType": "service", "elementRole": "navigation" },
+          { "eventName": "cta_click", "pageType": "service", "elementRole": "navigation" }
+        ],
+        "clusteringMetrics": { "dominantTopicShare": 0.5, "topicSwitchCount": 2, "repeatClusterVisits": 1, "totalPageViews": 5 },
+        "trafficSource": "organic_search"
+      },
+      "userHistory": [],
+      "expected": {
+        "state": "Explorer",
+        "confidenceBand": "low",
+        "lifecyclePhase": "acquisition"
+      }
+    }
+  ]
+}

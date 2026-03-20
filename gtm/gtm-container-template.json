@@ -1,0 +1,1049 @@
+{
+  "exportFormatVersion": 2,
+  "exportTime": "2026-03-20 00:00:00",
+  "containerVersion": {
+    "tag": [
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "tagId": "1",
+        "name": "GA4 Config - Behaviour Intelligence",
+        "type": "gaawc",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "measurementId",
+            "value": "{{GA4 Measurement ID}}"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "sendPageView",
+            "value": "true"
+          },
+          {
+            "type": "LIST",
+            "key": "fieldsToSet",
+            "list": [
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "name", "value": "page_type" },
+                  { "type": "TEMPLATE", "key": "value", "value": "{{DLV - page_type}}" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "name", "value": "page_topic" },
+                  { "type": "TEMPLATE", "key": "value", "value": "{{DLV - page_topic}}" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "name", "value": "traffic_source_group" },
+                  { "type": "TEMPLATE", "key": "value", "value": "{{CJS - Traffic Source Group}}" }
+                ]
+              }
+            ]
+          }
+        ],
+        "firingTriggerId": ["1"],
+        "consentSettings": {
+          "consentStatus": "NEEDED",
+          "consentType": {
+            "list": [{ "type": "TEMPLATE", "key": "consentType", "value": "analytics_storage" }]
+          }
+        }
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "tagId": "2",
+        "name": "GA4 Event - CTA Click",
+        "type": "gaawe",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "eventName",
+            "value": "cta_click"
+          },
+          {
+            "type": "TAG_REFERENCE",
+            "key": "measurementId",
+            "value": "GA4 Config - Behaviour Intelligence"
+          },
+          {
+            "type": "LIST",
+            "key": "eventParameters",
+            "list": [
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "name", "value": "page_type" },
+                  { "type": "TEMPLATE", "key": "value", "value": "{{DLV - page_type}}" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "name", "value": "page_topic" },
+                  { "type": "TEMPLATE", "key": "value", "value": "{{DLV - page_topic}}" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "name", "value": "element_role" },
+                  { "type": "TEMPLATE", "key": "value", "value": "{{DLV - element_role}}" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "name", "value": "element_weight" },
+                  { "type": "TEMPLATE", "key": "value", "value": "{{DLV - element_weight}}" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "name", "value": "cta_label" },
+                  { "type": "TEMPLATE", "key": "value", "value": "{{Click Text}}" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "name", "value": "cta_destination" },
+                  { "type": "TEMPLATE", "key": "value", "value": "{{Click URL}}" }
+                ]
+              }
+            ]
+          }
+        ],
+        "firingTriggerId": ["2"],
+        "consentSettings": {
+          "consentStatus": "NEEDED",
+          "consentType": {
+            "list": [{ "type": "TEMPLATE", "key": "consentType", "value": "analytics_storage" }]
+          }
+        }
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "tagId": "3",
+        "name": "GA4 Event - Form Start",
+        "type": "gaawe",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "eventName",
+            "value": "form_start"
+          },
+          {
+            "type": "TAG_REFERENCE",
+            "key": "measurementId",
+            "value": "GA4 Config - Behaviour Intelligence"
+          },
+          {
+            "type": "LIST",
+            "key": "eventParameters",
+            "list": [
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "name", "value": "page_type" },
+                  { "type": "TEMPLATE", "key": "value", "value": "{{DLV - page_type}}" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "name", "value": "page_topic" },
+                  { "type": "TEMPLATE", "key": "value", "value": "{{DLV - page_topic}}" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "name", "value": "form_id" },
+                  { "type": "TEMPLATE", "key": "value", "value": "{{Form ID}}" }
+                ]
+              }
+            ]
+          }
+        ],
+        "firingTriggerId": ["3"],
+        "consentSettings": {
+          "consentStatus": "NEEDED",
+          "consentType": {
+            "list": [{ "type": "TEMPLATE", "key": "consentType", "value": "analytics_storage" }]
+          }
+        }
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "tagId": "4",
+        "name": "GA4 Event - Form Submit",
+        "type": "gaawe",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "eventName",
+            "value": "form_submit"
+          },
+          {
+            "type": "TAG_REFERENCE",
+            "key": "measurementId",
+            "value": "GA4 Config - Behaviour Intelligence"
+          },
+          {
+            "type": "LIST",
+            "key": "eventParameters",
+            "list": [
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "name", "value": "page_type" },
+                  { "type": "TEMPLATE", "key": "value", "value": "{{DLV - page_type}}" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "name", "value": "page_topic" },
+                  { "type": "TEMPLATE", "key": "value", "value": "{{DLV - page_topic}}" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "name", "value": "form_id" },
+                  { "type": "TEMPLATE", "key": "value", "value": "{{Form ID}}" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "name", "value": "conversion_stage" },
+                  { "type": "TEMPLATE", "key": "value", "value": "{{DLV - conversion_stage}}" }
+                ]
+              }
+            ]
+          }
+        ],
+        "firingTriggerId": ["4"],
+        "consentSettings": {
+          "consentStatus": "NEEDED",
+          "consentType": {
+            "list": [{ "type": "TEMPLATE", "key": "consentType", "value": "analytics_storage" }]
+          }
+        }
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "tagId": "5",
+        "name": "GA4 Event - Booking Click",
+        "type": "gaawe",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "eventName",
+            "value": "booking_click"
+          },
+          {
+            "type": "TAG_REFERENCE",
+            "key": "measurementId",
+            "value": "GA4 Config - Behaviour Intelligence"
+          },
+          {
+            "type": "LIST",
+            "key": "eventParameters",
+            "list": [
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "name", "value": "page_type" },
+                  { "type": "TEMPLATE", "key": "value", "value": "{{DLV - page_type}}" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "name", "value": "page_topic" },
+                  { "type": "TEMPLATE", "key": "value", "value": "{{DLV - page_topic}}" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "name", "value": "booking_type" },
+                  { "type": "TEMPLATE", "key": "value", "value": "{{DLV - booking_type}}" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "name", "value": "conversion_stage" },
+                  { "type": "TEMPLATE", "key": "value", "value": "{{DLV - conversion_stage}}" }
+                ]
+              }
+            ]
+          }
+        ],
+        "firingTriggerId": ["5"],
+        "consentSettings": {
+          "consentStatus": "NEEDED",
+          "consentType": {
+            "list": [{ "type": "TEMPLATE", "key": "consentType", "value": "analytics_storage" }]
+          }
+        }
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "tagId": "6",
+        "name": "GA4 Event - Conversion Complete",
+        "type": "gaawe",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "eventName",
+            "value": "conversion_complete"
+          },
+          {
+            "type": "TAG_REFERENCE",
+            "key": "measurementId",
+            "value": "GA4 Config - Behaviour Intelligence"
+          },
+          {
+            "type": "LIST",
+            "key": "eventParameters",
+            "list": [
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "name", "value": "conversion_type" },
+                  { "type": "TEMPLATE", "key": "value", "value": "{{DLV - conversion_type}}" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "name", "value": "conversion_value" },
+                  { "type": "TEMPLATE", "key": "value", "value": "{{DLV - conversion_value}}" }
+                ]
+              }
+            ]
+          }
+        ],
+        "firingTriggerId": ["6"],
+        "consentSettings": {
+          "consentStatus": "NEEDED",
+          "consentType": {
+            "list": [{ "type": "TEMPLATE", "key": "consentType", "value": "analytics_storage" }]
+          }
+        }
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "tagId": "7",
+        "name": "GA4 Event - Resource Download",
+        "type": "gaawe",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "eventName",
+            "value": "resource_download"
+          },
+          {
+            "type": "TAG_REFERENCE",
+            "key": "measurementId",
+            "value": "GA4 Config - Behaviour Intelligence"
+          },
+          {
+            "type": "LIST",
+            "key": "eventParameters",
+            "list": [
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "name", "value": "page_type" },
+                  { "type": "TEMPLATE", "key": "value", "value": "{{DLV - page_type}}" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "name", "value": "page_topic" },
+                  { "type": "TEMPLATE", "key": "value", "value": "{{DLV - page_topic}}" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "name", "value": "resource_name" },
+                  { "type": "TEMPLATE", "key": "value", "value": "{{Click Text}}" }
+                ]
+              }
+            ]
+          }
+        ],
+        "firingTriggerId": ["7"],
+        "consentSettings": {
+          "consentStatus": "NEEDED",
+          "consentType": {
+            "list": [{ "type": "TEMPLATE", "key": "consentType", "value": "analytics_storage" }]
+          }
+        }
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "tagId": "8",
+        "name": "GA4 Event - Video Start",
+        "type": "gaawe",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "eventName",
+            "value": "video_start"
+          },
+          {
+            "type": "TAG_REFERENCE",
+            "key": "measurementId",
+            "value": "GA4 Config - Behaviour Intelligence"
+          },
+          {
+            "type": "LIST",
+            "key": "eventParameters",
+            "list": [
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "name", "value": "page_type" },
+                  { "type": "TEMPLATE", "key": "value", "value": "{{DLV - page_type}}" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "name", "value": "page_topic" },
+                  { "type": "TEMPLATE", "key": "value", "value": "{{DLV - page_topic}}" }
+                ]
+              }
+            ]
+          }
+        ],
+        "firingTriggerId": ["8"],
+        "consentSettings": {
+          "consentStatus": "NEEDED",
+          "consentType": {
+            "list": [{ "type": "TEMPLATE", "key": "consentType", "value": "analytics_storage" }]
+          }
+        }
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "tagId": "10",
+        "name": "BI - Rage Click Detector",
+        "type": "html",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "html",
+            "value": "<script>\n(function () {\n  'use strict';\n  function hasAnalyticsConsent() {\n    try {\n      var state = window.google_tag_data && window.google_tag_data.ics;\n      if (state && typeof state.entries === 'object') {\n        var entry = state.entries['analytics_storage'];\n        return entry && entry.update === 'granted';\n      }\n    } catch (e) {}\n    var dl = window.dataLayer || [];\n    for (var i = dl.length - 1; i >= 0; i--) {\n      if (dl[i] && dl[i].event === 'consent_update' && dl[i].analytics_storage === 'denied') {\n        return false;\n      }\n    }\n    return true;\n  }\n  if (!hasAnalyticsConsent()) return;\n  var THRESHOLD = 3;\n  var WINDOW_MS = 2000;\n  var DEBOUNCE_MS = 5000;\n  var clickLog = [];\n  var lastFiredAt = 0;\n  function elementSelector(el) {\n    if (!el || !el.tagName) return 'unknown';\n    var tag = el.tagName.toLowerCase();\n    var id = el.id ? '#' + el.id : '';\n    var cls = el.className ? '.' + String(el.className).trim().split(/\\s+/).slice(0, 2).join('.') : '';\n    return tag + id + cls;\n  }\n  document.addEventListener('click', function (e) {\n    var now = Date.now();\n    var target = e.target;\n    if (now - lastFiredAt < DEBOUNCE_MS) return;\n    clickLog.push({ time: now, target: target });\n    clickLog = clickLog.filter(function (c) { return now - c.time <= WINDOW_MS; });\n    var sameTargetCount = 0;\n    for (var i = 0; i < clickLog.length; i++) {\n      if (clickLog[i].target === target) sameTargetCount++;\n    }\n    if (sameTargetCount >= THRESHOLD) {\n      window.dataLayer = window.dataLayer || [];\n      window.dataLayer.push({\n        event: 'rage_click',\n        rage_click_element: elementSelector(target),\n        rage_click_count: sameTargetCount,\n        rage_click_url: window.location.pathname\n      });\n      lastFiredAt = now;\n      clickLog = [];\n    }\n  });\n})();\n</script>"
+          }
+        ],
+        "firingTriggerId": ["1"],
+        "consentSettings": {
+          "consentStatus": "NEEDED",
+          "consentType": {
+            "list": [{ "type": "TEMPLATE", "key": "consentType", "value": "analytics_storage" }]
+          }
+        }
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "tagId": "11",
+        "name": "BI - Dead Click Detector",
+        "type": "html",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "html",
+            "value": "<script>\n(function () {\n  'use strict';\n  function hasAnalyticsConsent() {\n    try {\n      var state = window.google_tag_data && window.google_tag_data.ics;\n      if (state && typeof state.entries === 'object') {\n        var entry = state.entries['analytics_storage'];\n        return entry && entry.update === 'granted';\n      }\n    } catch (e) {}\n    var dl = window.dataLayer || [];\n    for (var i = dl.length - 1; i >= 0; i--) {\n      if (dl[i] && dl[i].event === 'consent_update' && dl[i].analytics_storage === 'denied') {\n        return false;\n      }\n    }\n    return true;\n  }\n  if (!hasAnalyticsConsent()) return;\n  var OBSERVATION_WINDOW_MS = 300;\n  var DEBOUNCE_MS = 2000;\n  var lastFiredAt = 0;\n  var INTERACTIVE_TAGS = ['A', 'BUTTON', 'INPUT', 'SELECT', 'TEXTAREA', 'LABEL', 'SUMMARY'];\n  var INTERACTIVE_ROLES = ['button', 'link', 'menuitem', 'tab', 'checkbox', 'radio', 'switch'];\n  function isInteractive(el) {\n    if (!el || !el.tagName) return true;\n    if (INTERACTIVE_TAGS.indexOf(el.tagName) !== -1) return true;\n    var role = el.getAttribute('role');\n    if (role && INTERACTIVE_ROLES.indexOf(role) !== -1) return true;\n    if (el.getAttribute('tabindex') !== null) return true;\n    if (el.closest('a, button, [role=\"button\"], [role=\"link\"], label, summary')) return true;\n    if (el.getAttribute('onclick')) return true;\n    return false;\n  }\n  function elementSelector(el) {\n    if (!el || !el.tagName) return 'unknown';\n    var tag = el.tagName.toLowerCase();\n    var id = el.id ? '#' + el.id : '';\n    var cls = el.className ? '.' + String(el.className).trim().split(/\\s+/).slice(0, 2).join('.') : '';\n    return tag + id + cls;\n  }\n  document.addEventListener('click', function (e) {\n    var now = Date.now();\n    var target = e.target;\n    if (now - lastFiredAt < DEBOUNCE_MS) return;\n    if (isInteractive(target)) return;\n    var domChanged = false;\n    var observer = new MutationObserver(function () { domChanged = true; });\n    observer.observe(document.body, { childList: true, subtree: true, attributes: true, characterData: true });\n    var originalUrl = window.location.href;\n    setTimeout(function () {\n      observer.disconnect();\n      var navigated = window.location.href !== originalUrl;\n      if (!domChanged && !navigated) {\n        window.dataLayer = window.dataLayer || [];\n        window.dataLayer.push({\n          event: 'dead_click',\n          dead_click_element: elementSelector(target),\n          dead_click_url: window.location.pathname\n        });\n        lastFiredAt = Date.now();\n      }\n    }, OBSERVATION_WINDOW_MS);\n  });\n})();\n</script>"
+          }
+        ],
+        "firingTriggerId": ["1"],
+        "consentSettings": {
+          "consentStatus": "NEEDED",
+          "consentType": {
+            "list": [{ "type": "TEMPLATE", "key": "consentType", "value": "analytics_storage" }]
+          }
+        }
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "tagId": "12",
+        "name": "BI - Form Error Tracker",
+        "type": "html",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "html",
+            "value": "<script>\n(function () {\n  'use strict';\n  function hasAnalyticsConsent() {\n    try {\n      var state = window.google_tag_data && window.google_tag_data.ics;\n      if (state && typeof state.entries === 'object') {\n        var entry = state.entries['analytics_storage'];\n        return entry && entry.update === 'granted';\n      }\n    } catch (e) {}\n    var dl = window.dataLayer || [];\n    for (var i = dl.length - 1; i >= 0; i--) {\n      if (dl[i] && dl[i].event === 'consent_update' && dl[i].analytics_storage === 'denied') {\n        return false;\n      }\n    }\n    return true;\n  }\n  if (!hasAnalyticsConsent()) return;\n  var DEBOUNCE_MS = 1000;\n  var lastFiredFields = {};\n  function fireFormError(fieldName, errorMessage, formId) {\n    var now = Date.now();\n    var key = formId + ':' + fieldName;\n    if (lastFiredFields[key] && now - lastFiredFields[key] < DEBOUNCE_MS) return;\n    lastFiredFields[key] = now;\n    window.dataLayer = window.dataLayer || [];\n    window.dataLayer.push({\n      event: 'form_error',\n      form_error_field: fieldName || 'unknown',\n      form_error_message: errorMessage || 'validation failed',\n      form_error_form_id: formId || 'unknown',\n      form_error_url: window.location.pathname\n    });\n  }\n  document.addEventListener('invalid', function (e) {\n    var target = e.target;\n    var formEl = target.closest('form');\n    fireFormError(\n      target.name || target.id || 'unnamed',\n      target.validationMessage || 'validation failed',\n      formEl ? (formEl.id || formEl.getAttribute('data-form-name') || 'unknown') : 'unknown'\n    );\n  }, true);\n  var errorClassPatterns = ['error', 'invalid', 'has-error', 'is-invalid', 'field-error'];\n  var classObserver = new MutationObserver(function (mutations) {\n    for (var i = 0; i < mutations.length; i++) {\n      var mutation = mutations[i];\n      if (mutation.type !== 'attributes' || mutation.attributeName !== 'class') continue;\n      var target = mutation.target;\n      if (!target.classList) continue;\n      for (var j = 0; j < errorClassPatterns.length; j++) {\n        if (target.classList.contains(errorClassPatterns[j])) {\n          var isFormField = ['INPUT', 'SELECT', 'TEXTAREA'].indexOf(target.tagName) !== -1;\n          var fieldEl = isFormField ? target : target.querySelector('input, select, textarea');\n          if (fieldEl) {\n            var formEl = fieldEl.closest('form');\n            fireFormError(\n              fieldEl.name || fieldEl.id || 'unnamed',\n              'class-based validation error',\n              formEl ? (formEl.id || 'unknown') : 'unknown'\n            );\n          }\n          break;\n        }\n      }\n    }\n  });\n  classObserver.observe(document.body, { attributes: true, attributeFilter: ['class'], subtree: true });\n})();\n</script>"
+          }
+        ],
+        "firingTriggerId": ["1"],
+        "consentSettings": {
+          "consentStatus": "NEEDED",
+          "consentType": {
+            "list": [{ "type": "TEMPLATE", "key": "consentType", "value": "analytics_storage" }]
+          }
+        }
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "tagId": "13",
+        "name": "BI - Element Metadata Reader",
+        "type": "html",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "html",
+            "value": "<script>\n(function () {\n  'use strict';\n  function hasAnalyticsConsent() {\n    try {\n      var state = window.google_tag_data && window.google_tag_data.ics;\n      if (state && typeof state.entries === 'object') {\n        var entry = state.entries['analytics_storage'];\n        return entry && entry.update === 'granted';\n      }\n    } catch (e) {}\n    var dl = window.dataLayer || [];\n    for (var i = dl.length - 1; i >= 0; i--) {\n      if (dl[i] && dl[i].event === 'consent_update' && dl[i].analytics_storage === 'denied') {\n        return false;\n      }\n    }\n    return true;\n  }\n  if (!hasAnalyticsConsent()) return;\n  document.addEventListener('click', function (e) {\n    var el = e.target.closest('[data-element-role], [data-element-weight]');\n    if (!el) return;\n    var role = el.getAttribute('data-element-role');\n    var weight = el.getAttribute('data-element-weight');\n    if (!role && !weight) return;\n    var payload = {};\n    if (role) payload.element_role = role;\n    if (weight) payload.element_weight = parseFloat(weight);\n    window.dataLayer = window.dataLayer || [];\n    window.dataLayer.push(payload);\n  });\n})();\n</script>"
+          }
+        ],
+        "firingTriggerId": ["1"],
+        "consentSettings": {
+          "consentStatus": "NEEDED",
+          "consentType": {
+            "list": [{ "type": "TEMPLATE", "key": "consentType", "value": "analytics_storage" }]
+          }
+        }
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "tagId": "14",
+        "name": "GA4 Event - Rage Click",
+        "type": "gaawe",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "eventName",
+            "value": "rage_click"
+          },
+          {
+            "type": "TAG_REFERENCE",
+            "key": "measurementId",
+            "value": "GA4 Config - Behaviour Intelligence"
+          },
+          {
+            "type": "LIST",
+            "key": "eventParameters",
+            "list": [
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "name", "value": "rage_click_element" },
+                  { "type": "TEMPLATE", "key": "value", "value": "{{DLV - rage_click_element}}" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "name", "value": "page_type" },
+                  { "type": "TEMPLATE", "key": "value", "value": "{{DLV - page_type}}" }
+                ]
+              }
+            ]
+          }
+        ],
+        "firingTriggerId": ["9"],
+        "consentSettings": {
+          "consentStatus": "NEEDED",
+          "consentType": {
+            "list": [{ "type": "TEMPLATE", "key": "consentType", "value": "analytics_storage" }]
+          }
+        }
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "tagId": "15",
+        "name": "GA4 Event - Dead Click",
+        "type": "gaawe",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "eventName",
+            "value": "dead_click"
+          },
+          {
+            "type": "TAG_REFERENCE",
+            "key": "measurementId",
+            "value": "GA4 Config - Behaviour Intelligence"
+          },
+          {
+            "type": "LIST",
+            "key": "eventParameters",
+            "list": [
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "name", "value": "dead_click_element" },
+                  { "type": "TEMPLATE", "key": "value", "value": "{{DLV - dead_click_element}}" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "name", "value": "page_type" },
+                  { "type": "TEMPLATE", "key": "value", "value": "{{DLV - page_type}}" }
+                ]
+              }
+            ]
+          }
+        ],
+        "firingTriggerId": ["10"],
+        "consentSettings": {
+          "consentStatus": "NEEDED",
+          "consentType": {
+            "list": [{ "type": "TEMPLATE", "key": "consentType", "value": "analytics_storage" }]
+          }
+        }
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "tagId": "16",
+        "name": "GA4 Event - Form Error",
+        "type": "gaawe",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "eventName",
+            "value": "form_error"
+          },
+          {
+            "type": "TAG_REFERENCE",
+            "key": "measurementId",
+            "value": "GA4 Config - Behaviour Intelligence"
+          },
+          {
+            "type": "LIST",
+            "key": "eventParameters",
+            "list": [
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "name", "value": "form_error_field" },
+                  { "type": "TEMPLATE", "key": "value", "value": "{{DLV - form_error_field}}" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "name", "value": "form_error_form_id" },
+                  { "type": "TEMPLATE", "key": "value", "value": "{{DLV - form_error_form_id}}" }
+                ]
+              }
+            ]
+          }
+        ],
+        "firingTriggerId": ["11"],
+        "consentSettings": {
+          "consentStatus": "NEEDED",
+          "consentType": {
+            "list": [{ "type": "TEMPLATE", "key": "consentType", "value": "analytics_storage" }]
+          }
+        }
+      }
+    ],
+    "trigger": [
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "triggerId": "1",
+        "name": "All Pages",
+        "type": "PAGEVIEW"
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "triggerId": "2",
+        "name": "CTA Click",
+        "type": "CLICK",
+        "filter": [
+          {
+            "type": "CSS_SELECTOR",
+            "parameter": [
+              { "type": "TEMPLATE", "key": "arg0", "value": "{{Click Element}}" },
+              { "type": "TEMPLATE", "key": "arg1", "value": ".cta, [data-cta], .btn-primary, [data-element-role='progression']" }
+            ]
+          }
+        ],
+        "notes": "Adjust the CSS selector to match your site's CTA elements. The default matches .cta, [data-cta], .btn-primary, and elements with data-element-role='progression'."
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "triggerId": "3",
+        "name": "Form Start - Element Focus",
+        "type": "CUSTOM_EVENT",
+        "customEventFilter": [
+          {
+            "type": "EQUALS",
+            "parameter": [
+              { "type": "TEMPLATE", "key": "arg0", "value": "{{_event}}" },
+              { "type": "TEMPLATE", "key": "arg1", "value": "gtm.element.focus" }
+            ]
+          }
+        ],
+        "notes": "Fires on first form field interaction. You may need to adjust this to a custom event that your forms emit, or use GTM's built-in element visibility trigger on the first form field."
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "triggerId": "4",
+        "name": "Form Submit",
+        "type": "FORM_SUBMISSION",
+        "filter": [
+          {
+            "type": "MATCH_REGEX",
+            "parameter": [
+              { "type": "TEMPLATE", "key": "arg0", "value": "{{Page URL}}" },
+              { "type": "TEMPLATE", "key": "arg1", "value": ".*" }
+            ]
+          }
+        ],
+        "notes": "Fires on all form submissions. Add URL or form ID filters if you need to exclude specific forms (e.g. search forms)."
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "triggerId": "5",
+        "name": "Booking Click",
+        "type": "CLICK",
+        "filter": [
+          {
+            "type": "CSS_SELECTOR",
+            "parameter": [
+              { "type": "TEMPLATE", "key": "arg0", "value": "{{Click Element}}" },
+              { "type": "TEMPLATE", "key": "arg1", "value": ".booking-btn, [data-booking], [href*='calendly'], [href*='booking']" }
+            ]
+          }
+        ],
+        "notes": "Adjust the CSS selector to match your site's booking elements."
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "triggerId": "6",
+        "name": "Conversion Complete",
+        "type": "CUSTOM_EVENT",
+        "customEventFilter": [
+          {
+            "type": "EQUALS",
+            "parameter": [
+              { "type": "TEMPLATE", "key": "arg0", "value": "{{_event}}" },
+              { "type": "TEMPLATE", "key": "arg1", "value": "conversion_complete" }
+            ]
+          }
+        ],
+        "notes": "Fires when your site pushes { event: 'conversion_complete' } to the dataLayer. Add this push to your thank-you/confirmation page or form success handler."
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "triggerId": "7",
+        "name": "Resource Download Click",
+        "type": "CLICK",
+        "filter": [
+          {
+            "type": "MATCH_REGEX",
+            "parameter": [
+              { "type": "TEMPLATE", "key": "arg0", "value": "{{Click URL}}" },
+              { "type": "TEMPLATE", "key": "arg1", "value": "\\.(pdf|docx?|xlsx?|pptx?|zip|csv)$" }
+            ]
+          }
+        ],
+        "notes": "Matches clicks on common document file types. Add additional extensions if needed."
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "triggerId": "8",
+        "name": "Video Start",
+        "type": "CUSTOM_EVENT",
+        "customEventFilter": [
+          {
+            "type": "EQUALS",
+            "parameter": [
+              { "type": "TEMPLATE", "key": "arg0", "value": "{{_event}}" },
+              { "type": "TEMPLATE", "key": "arg1", "value": "video_start" }
+            ]
+          }
+        ],
+        "notes": "Fires when your video player pushes { event: 'video_start' } to the dataLayer. For YouTube embeds, use GTM's built-in YouTube video trigger instead."
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "triggerId": "9",
+        "name": "CE - rage_click",
+        "type": "CUSTOM_EVENT",
+        "customEventFilter": [
+          {
+            "type": "EQUALS",
+            "parameter": [
+              { "type": "TEMPLATE", "key": "arg0", "value": "{{_event}}" },
+              { "type": "TEMPLATE", "key": "arg1", "value": "rage_click" }
+            ]
+          }
+        ]
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "triggerId": "10",
+        "name": "CE - dead_click",
+        "type": "CUSTOM_EVENT",
+        "customEventFilter": [
+          {
+            "type": "EQUALS",
+            "parameter": [
+              { "type": "TEMPLATE", "key": "arg0", "value": "{{_event}}" },
+              { "type": "TEMPLATE", "key": "arg1", "value": "dead_click" }
+            ]
+          }
+        ]
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "triggerId": "11",
+        "name": "CE - form_error",
+        "type": "CUSTOM_EVENT",
+        "customEventFilter": [
+          {
+            "type": "EQUALS",
+            "parameter": [
+              { "type": "TEMPLATE", "key": "arg0", "value": "{{_event}}" },
+              { "type": "TEMPLATE", "key": "arg1", "value": "form_error" }
+            ]
+          }
+        ]
+      }
+    ],
+    "variable": [
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "variableId": "1",
+        "name": "GA4 Measurement ID",
+        "type": "c",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "value",
+            "value": "G-XXXXXXXXXX"
+          }
+        ],
+        "notes": "REQUIRED: Replace G-XXXXXXXXXX with your GA4 Measurement ID."
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "variableId": "2",
+        "name": "DLV - page_type",
+        "type": "v",
+        "parameter": [
+          { "type": "TEMPLATE", "key": "name", "value": "page_type" },
+          { "type": "INTEGER", "key": "dataLayerVersion", "value": "2" },
+          { "type": "TEMPLATE", "key": "defaultValue", "value": "unknown" }
+        ]
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "variableId": "3",
+        "name": "DLV - page_topic",
+        "type": "v",
+        "parameter": [
+          { "type": "TEMPLATE", "key": "name", "value": "page_topic" },
+          { "type": "INTEGER", "key": "dataLayerVersion", "value": "2" },
+          { "type": "TEMPLATE", "key": "defaultValue", "value": "General" }
+        ]
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "variableId": "4",
+        "name": "DLV - intent_weight",
+        "type": "v",
+        "parameter": [
+          { "type": "TEMPLATE", "key": "name", "value": "intent_weight" },
+          { "type": "INTEGER", "key": "dataLayerVersion", "value": "2" }
+        ]
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "variableId": "5",
+        "name": "DLV - content_role",
+        "type": "v",
+        "parameter": [
+          { "type": "TEMPLATE", "key": "name", "value": "content_role" },
+          { "type": "INTEGER", "key": "dataLayerVersion", "value": "2" }
+        ]
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "variableId": "6",
+        "name": "DLV - offer_id",
+        "type": "v",
+        "parameter": [
+          { "type": "TEMPLATE", "key": "name", "value": "offer_id" },
+          { "type": "INTEGER", "key": "dataLayerVersion", "value": "2" }
+        ]
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "variableId": "7",
+        "name": "DLV - element_role",
+        "type": "v",
+        "parameter": [
+          { "type": "TEMPLATE", "key": "name", "value": "element_role" },
+          { "type": "INTEGER", "key": "dataLayerVersion", "value": "2" }
+        ]
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "variableId": "8",
+        "name": "DLV - element_weight",
+        "type": "v",
+        "parameter": [
+          { "type": "TEMPLATE", "key": "name", "value": "element_weight" },
+          { "type": "INTEGER", "key": "dataLayerVersion", "value": "2" }
+        ]
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "variableId": "9",
+        "name": "DLV - conversion_stage",
+        "type": "v",
+        "parameter": [
+          { "type": "TEMPLATE", "key": "name", "value": "conversion_stage" },
+          { "type": "INTEGER", "key": "dataLayerVersion", "value": "2" }
+        ]
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "variableId": "10",
+        "name": "DLV - booking_type",
+        "type": "v",
+        "parameter": [
+          { "type": "TEMPLATE", "key": "name", "value": "booking_type" },
+          { "type": "INTEGER", "key": "dataLayerVersion", "value": "2" }
+        ]
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "variableId": "11",
+        "name": "DLV - conversion_type",
+        "type": "v",
+        "parameter": [
+          { "type": "TEMPLATE", "key": "name", "value": "conversion_type" },
+          { "type": "INTEGER", "key": "dataLayerVersion", "value": "2" }
+        ]
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "variableId": "12",
+        "name": "DLV - conversion_value",
+        "type": "v",
+        "parameter": [
+          { "type": "TEMPLATE", "key": "name", "value": "conversion_value" },
+          { "type": "INTEGER", "key": "dataLayerVersion", "value": "2" }
+        ]
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "variableId": "13",
+        "name": "DLV - rage_click_element",
+        "type": "v",
+        "parameter": [
+          { "type": "TEMPLATE", "key": "name", "value": "rage_click_element" },
+          { "type": "INTEGER", "key": "dataLayerVersion", "value": "2" }
+        ]
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "variableId": "14",
+        "name": "DLV - dead_click_element",
+        "type": "v",
+        "parameter": [
+          { "type": "TEMPLATE", "key": "name", "value": "dead_click_element" },
+          { "type": "INTEGER", "key": "dataLayerVersion", "value": "2" }
+        ]
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "variableId": "15",
+        "name": "DLV - form_error_field",
+        "type": "v",
+        "parameter": [
+          { "type": "TEMPLATE", "key": "name", "value": "form_error_field" },
+          { "type": "INTEGER", "key": "dataLayerVersion", "value": "2" }
+        ]
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "variableId": "16",
+        "name": "DLV - form_error_form_id",
+        "type": "v",
+        "parameter": [
+          { "type": "TEMPLATE", "key": "name", "value": "form_error_form_id" },
+          { "type": "INTEGER", "key": "dataLayerVersion", "value": "2" }
+        ]
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "variableId": "17",
+        "name": "CJS - Traffic Source Group",
+        "type": "jsm",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "javascript",
+            "value": "function () {\n  'use strict';\n  var ref = (document.referrer || '').toLowerCase();\n  var params = new URLSearchParams(window.location.search);\n  var utmMedium = (params.get('utm_medium') || '').toLowerCase();\n  var hostname = window.location.hostname.toLowerCase();\n  if (params.get('gclid') || params.get('msclkid') || utmMedium === 'cpc' || utmMedium === 'ppc' || utmMedium === 'paid_search') return 'paid_search';\n  var socialDomains = ['facebook.com', 'fb.com', 't.co', 'twitter.com', 'x.com', 'linkedin.com', 'instagram.com', 'pinterest.com', 'tiktok.com', 'youtube.com', 'reddit.com', 'threads.net'];\n  if (utmMedium === 'social' || utmMedium === 'social-media') return 'social_media';\n  for (var i = 0; i < socialDomains.length; i++) { if (ref.indexOf(socialDomains[i]) !== -1) return 'social_media'; }\n  var searchDomains = ['google.', 'bing.com', 'yahoo.', 'duckduckgo.com', 'baidu.com', 'yandex.', 'ecosia.org', 'ask.com'];\n  if (utmMedium === 'organic') return 'organic_search';\n  for (var j = 0; j < searchDomains.length; j++) { if (ref.indexOf(searchDomains[j]) !== -1) return 'organic_search'; }\n  if (ref && ref.indexOf(hostname) === -1) return 'referral';\n  return 'direct';\n}"
+          }
+        ]
+      }
+    ]
+  }
+}

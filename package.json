@@ -1,0 +1,14 @@
+{
+  "name": "behaviour-intelligence-system",
+  "version": "1.1.0",
+  "description": "Behavioural intelligence framework for websites and digital products. Classifies visitors into actionable states using signals, confidence scoring, and feedback loops.",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "generate": "node tools/generate-config.js",
+    "test": "node test/unit-tests.js && node test/test-runner.js && node test/validate-rules.js && node test/parity-tests.js"
+  },
+  "keywords": ["analytics", "behavioural-intelligence", "ga4", "bigquery", "classification"],
+  "author": "Steven Gerson, Gerson Ltd",
+  "license": "MIT"
+}

@@ -1,0 +1,444 @@
+# ==============================================================================
+# Behaviour Intelligence System — State Rules Reference
+# ==============================================================================
+# Single source of truth for all state definitions, thresholds, weights,
+# and confidence logic. src/config.js is auto-generated from this file.
+#
+# After editing, run:  node tools/generate-config.js
+# Then verify with:    npm test
+# ==============================================================================
+
+version: "1.1"
+last_updated: "2026-03-19"
+
+# ─── Taxonomy Source ─────────────────────────────────────────────────
+
+taxonomy:
+  primary_source: cms_embedded
+  fallback_source: external_register
+  cms_fields:
+    page_type: { html_attribute: "data-page-type", ga4_param: "page_type" }
+    page_topic: { html_attribute: "data-page-topic", ga4_param: "page_topic" }
+    intent_weight: { html_attribute: "data-intent-weight", ga4_param: "intent_weight" }
+  element_fields:
+    element_role: { html_attribute: "data-element-role", ga4_param: "element_role" }
+    element_weight: { html_attribute: "data-element-weight", ga4_param: "element_weight" }
+  default_for_untagged:
+    page_topic: General
+    intent_weight: 0.5
+
+# ─── Element Role Weights ────────────────────────────────────────────
+
+element_weights:
+  progression: 2.0
+  navigation: 0.3
+  depth: 0.5
+  tool_use: 0.8
+  social: 0.3
+
+# ─── Signals ─────────────────────────────────────────────────────────
+
+signals:
+  breadth:
+    type: primary
+    range: [0, 10]
+    inputs:
+      - unique_pages
+      - unique_page_types
+      - unique_topics
+    fixed_rule_thresholds:
+      - { max_pages: 1, score: 1 }
+      - { max_pages: 3, max_types: 2, score: 3 }
+      - { max_pages: 5, score: 5 }
+      - { max_pages: 8, min_types: 3, score: 7 }
+      - { default: true, score: 9 }
+
+  depth:
+    type: primary
+    range: [0, 10]
+    inputs:
+      - engagement_time_seconds
+      - avg_scroll_percent
+      - deep_engagement_events
+    fixed_rule_thresholds:
+      - { max_seconds: 10, score: 1 }
+      - { max_seconds: 30, score: 3 }
+      - { max_seconds: 90, score: 5 }
+      - { max_seconds: 180, score: 7 }
+      - { default: true, score: 9 }
+    bonuses:
+      - { condition: "avg_scroll_percent >= 75", bonus: 1 }
+      - { condition: "deep_engagement_events > 0", bonus: 1 }
+
+  progression:
+    type: primary
+    range: [0, 10]
+    inputs:
+      - cta_click_count
+      - form_start
+      - form_submit
+      - booking_click
+      - conversion_complete
+    calculation: "SUM(action_weight * COALESCE(element_weight, page_intent_weight))"
+    element_override: "element_weight takes priority over page_intent_weight when present"
+    excluded_events: [page_view, scroll_75]
+
+  clustering:
+    type: derived
+    range: [0, 10]
+    inputs:
+      - dominant_topic_share
+      - topic_switch_count
+      - repeat_cluster_visits
+      - total_page_views
+    formula: "(dominant_topic_share * 10) - switch_penalty + repeat_bonus"
+    switch_penalty:
+      cap: 5
+      min_pages_for_penalty: 4
+    repeat_bonus:
+      cap: 3
+      calculation: "MIN(repeat_cluster_visits - 1, 3)"
+
+# ─── Context Weights ─────────────────────────────────────────────────
+
+page_type_weights:
+  homepage: 0.5
+  blog: 0.6
+  resource: 0.6
+  service: 1.0
+  product: 1.0
+  case_study: 1.2
+  pricing: 1.5
+  contact: 2.0
+  booking: 2.0
+  confirmation: 2.0
+  unknown: 0.5
+
+action_weights:
+  page_view: 0.2
+  scroll_75: 0.5
+  cta_click: 1.0
+  form_start: 1.5
+  form_submit: 2.0
+  booking_click: 1.5
+  conversion_complete: 2.0
+  resource_download: 0.8
+  video_start: 0.6
+
+source_bias:
+  # Capped at ±1 to prevent source context from overriding behaviour
+  direct:         { progression: 1,  depth: 0 }
+  organic_search: { progression: 0,  depth: 0 }
+  social_media:   { progression: -1, depth: 0 }
+  referral:       { progression: 0,  depth: 1 }
+  paid_search:    { progression: 1,  depth: 0 }
+
+# ─── State Definitions (priority order) ──────────────────────────────
+
+states:
+  - name: Engaged
+    priority: 1
+    lifecycle_phase: retention
+    criteria:
+      progression: { min: 8 }
+    description: "Conversion completed. Post-action phase."
+
+  - name: Hesitant
+    priority: 2
+    lifecycle_phase: evaluation
+    criteria:
+      progression: { min: 6 }
+      depth: { min: 4 }
+      conversion_complete: false
+    description: "High-intent action started but not completed."
+
+  - name: Returning Evaluator
+    priority: 3
+    lifecycle_phase: retention
+    criteria:
+      temporal: true
+      conversion_complete: false
+    temporal_requirements:
+      sessions_7d: { min: 2 }
+      sessions_30d: { min: 3 }
+      trend: [increasing, reinforcing]
+    description: "Multi-session with increasing signals, no conversion."
+
+  - name: Focused Evaluator
+    priority: 4
+    lifecycle_phase: evaluation
+    criteria:
+      breadth: { min: 2, max: 4 }
+      depth: { min: 7 }
+      clustering: { min: 7 }
+      progression: { min: 6 }
+    description: "Narrow, deep, high-progression behaviour."
+
+  - name: Evaluator
+    priority: 5
+    lifecycle_phase: evaluation
+    criteria:
+      depth: { min: 6 }
+      clustering: { min: 5 }
+      progression: { min: 4, max: 6 }
+    description: "Serious evaluation with depth and clustering."
+
+  - name: Comparator
+    priority: 6
+    lifecycle_phase: evaluation
+    criteria:
+      breadth: { min: 4, max: 7 }
+      depth: { min: 3, max: 5 }
+      clustering: { min: 5 }
+      progression: { min: 3, max: 5 }
+    description: "Evaluating across competing options."
+
+  - name: Stalled
+    priority: 7
+    lifecycle_phase: evaluation
+    criteria:
+      breadth: { min: 3, max: 6 }
+      depth: { min: 4, max: 6 }
+      progression: { max: 3 }
+    description: "Moderate engagement with low progression and loops."
+    sub_types:
+      - name: "Stalled (Friction)"
+        condition: "friction_signals_present"
+        friction_signals:
+          rage_click_count: { min: 3 }
+          dead_click_count: { min: 2 }
+          form_error_count: { min: 2 }
+          high_layout_shift: true
+
+  - name: Scanner
+    priority: 8
+    lifecycle_phase: acquisition
+    criteria:
+      breadth: { min: 6 }
+      depth: { max: 3 }
+      clustering: { max: 3 }
+    description: "Wide but shallow exploration."
+
+  - name: Explorer
+    priority: 9
+    lifecycle_phase: acquisition
+    criteria:
+      breadth: { min: 4, max: 7 }
+      depth: { min: 3, max: 6 }
+    description: "Moderate exploration with emerging structure."
+
+  - name: Mismatch
+    priority: 10
+    lifecycle_phase: acquisition
+    criteria:
+      breadth: { max: 2 }
+      depth: { max: 2 }
+      progression: { max: 0 }
+    description: "Immediate exit or no meaningful engagement."
+
+# ─── Special Temporal States ─────────────────────────────────────────
+
+temporal_states:
+  re_engaged_prospect:
+    gap_days: 30
+    min_clustering: 5
+    min_progression: 4
+    description: "30+ day gap followed by renewed intent."
+
+  persistent_hesitation:
+    min_hesitant_sessions: 2
+    within_days: 14
+    description: "2+ interrupted conversion attempts within 14 days."
+
+  chronic_stall:
+    min_stalled_sessions: 3
+    within_days: 30
+    excluded_trends: [increasing, reinforcing]
+    description: "3+ low-progression sessions without improvement."
+
+# ─── Confidence Scoring ──────────────────────────────────────────────
+
+confidence:
+  range: [0, 10]
+  bands:
+    low:    { min: 0, max: 3 }
+    medium: { min: 4, max: 6 }
+    high:   { min: 7, max: 10 }
+
+  factors:
+    signal_count:
+      range: [0, 2]
+      thresholds:
+        - { min_types: 5, score: 2 }
+        - { min_types: 3, score: 1 }
+        - { default: true, score: 0 }
+
+    signal_strength:
+      range: [0, 2]
+      thresholds:
+        - { events: [form_start, form_submit, booking_click], score: 2 }
+        - { events: [cta_click], score: 1 }
+        - { default: true, score: 0 }
+
+    state_clarity:
+      range: [0, 2]
+      thresholds:
+        - { primary_gap_min: 40, score: 2 }
+        - { primary_gap_min: 20, score: 1 }
+        - { default: true, score: 0 }
+
+    session_depth:
+      range: [0, 2]
+      thresholds:
+        - { min_seconds: 120, min_pages: 5, score: 2 }
+        - { min_seconds: 30, min_pages: 3, score: 1 }
+        - { default: true, score: 0 }
+
+    temporal_consistency:
+      range: [0, 2]
+      thresholds:
+        - { min_sessions: 3, trends: [reinforcing], score: 2 }
+        - { min_sessions: 2, trends: [consistent, reinforcing], score: 1 }
+        - { default: true, score: 0 }
+
+  # Contradiction penalty (addresses Codex recommendation #4):
+  # Reduces confidence when signals contradict each other.
+  contradiction_penalties:
+    - condition: "depth >= 7 AND progression <= 2 AND breadth >= 5"
+      penalty: -1
+      reason: "High depth + low progression + high breadth suggests confusion, not evaluation"
+    - condition: "breadth >= 8 AND depth <= 2"
+      penalty: -1
+      reason: "Very wide + very shallow suggests lost user, not intentional exploration"
+
+  # Hybrid ambiguity penalty
+  hybrid_threshold_percent: 70
+  hybrid_penalty: -1
+
+# ─── Action Layer ────────────────────────────────────────────────────
+
+actions:
+  Mismatch:
+    action: "Review traffic source quality and landing page relevance"
+    metric: "Reduction in Mismatch share; increase in sessions beyond first page"
+    type: strategic
+    confidence_minimum: low
+    automated: false
+
+  Scanner:
+    action: "Add guided entry and clearer value proposition above the fold"
+    metric: "Increase in deeper-session rate and evaluator-state share"
+    type: ux_product
+    confidence_minimum: medium
+    automated: false
+
+  Explorer:
+    action: "Strengthen pathways from discovery content into relevant offers"
+    metric: "Increase in clustered navigation and progression score"
+    type: ux_product
+    confidence_minimum: medium
+    automated: false
+
+  Comparator:
+    action: "Clarify differentiation, side-by-side proof, concise summaries"
+    metric: "Increase in focused evaluator or conversion rate"
+    type: ux_product
+    confidence_minimum: medium
+    automated: false
+
+  Evaluator:
+    action: "Add case studies, implementation details, FAQs, proof elements"
+    metric: "Increase in high-intent page views and conversion starts"
+    type: content
+    confidence_minimum: medium
+    automated: false
+
+  Focused Evaluator:
+    action: "Reduce distractions, shorten path to contact / purchase"
+    metric: "Increase in conversion completion rate"
+    type: ux_product
+    confidence_minimum: medium
+    automated: true
+
+  Hesitant:
+    action: "Reduce fields, clarify next step, add reassurance"
+    metric: "Form completion rate and drop-off reduction"
+    type: ux_product_crm
+    confidence_minimum: medium
+    automated: true
+
+  Stalled:
+    action: "Simplify navigation, reduce loops, add recommendation pathways"
+    metric: "Increase in forward progression, reduction in loops"
+    type: ux_product
+    confidence_minimum: medium
+    automated: false
+
+  "Stalled (Friction)":
+    action: "Fix broken interactions: rage-clicks, dead-clicks, form errors, CLS"
+    metric: "Reduction in friction events; progression from blocked pages"
+    type: ux_engineering
+    confidence_minimum: medium
+    automated: false
+
+  Returning Evaluator:
+    action: "Reinforce differentiation and closing reassurance"
+    metric: "Increase in conversion among repeat visitors"
+    type: content_crm
+    confidence_minimum: high
+    automated: true
+
+  Engaged:
+    action: "Support onboarding, confirmation, post-conversion confidence"
+    metric: "Faster onboarding, reduced post-conversion abandonment"
+    type: crm_product
+    confidence_minimum: high
+    automated: true
+
+# ─── Motivation Signals ──────────────────────────────────────────────
+
+motivation:
+  confidence_gate: 4  # minimum confidence to assign motivation
+  categories:
+    curiosity-driven:
+      pattern: "Broad exploration, low commitment, limited progression"
+      action_modifier: "Improve guided entry and value framing"
+    value-driven:
+      pattern: "Deep engagement with proof/outcome or trust content"
+      action_modifier: "Surface outcomes, case studies, implementation detail"
+    risk-sensitive:
+      pattern: "Strong intent signals with hesitation before completion"
+      action_modifier: "Add reassurance (guarantees, proof, process clarity)"
+    confusion-driven:
+      pattern: "Repeated loops, switching, low forward movement"
+      action_modifier: "Simplify UX and next-step guidance"
+    overload-sensitive:
+      pattern: "Deep dwell and repeated review without progression"
+      action_modifier: "Reduce options and shorten decision path"
+    urgency-driven:
+      pattern: "Fast movement to high-intent with minimal exploration"
+      action_modifier: "Remove distractions, shorten conversion path"
+
+# ─── Sub-types ───────────────────────────────────────────────────────
+
+sub_types:
+  proof-focused:
+    page_types: [case_study, testimonial, results]
+    depth_share_threshold: 0.5
+  trust-focused:
+    page_types: [about, team, credentials, reviews]
+    depth_share_threshold: 0.5
+  price-focused:
+    page_types: [pricing, comparison, plans]
+    depth_share_threshold: 0.4
+  resource-seeking:
+    page_types: [download, guide, tool, documentation]
+    depth_share_threshold: 0.5
+
+# ─── Recency Bands ──────────────────────────────────────────────────
+
+recency_bands:
+  highly_recent: { max_days: 2 }
+  active_consideration: { max_days: 7 }
+  delayed_return: { max_days: 30 }
+  dormant: { min_days: 31 }
