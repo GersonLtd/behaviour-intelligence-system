@@ -240,9 +240,10 @@ friction_metrics AS (
   SELECT
     user_pseudo_id,
     session_id,
-    COUNTIF(event_name = 'rage_click')  AS rage_clicks,
-    COUNTIF(event_name = 'dead_click')  AS dead_clicks,
-    COUNTIF(event_name = 'form_error')  AS form_errors
+    COUNTIF(event_name = 'rage_click')        AS rage_clicks,
+    COUNTIF(event_name = 'dead_click')        AS dead_clicks,
+    COUNTIF(event_name = 'form_error')        AS form_errors,
+    COUNTIF(event_name = 'high_layout_shift') AS high_layout_shifts
   FROM mapped_events
   GROUP BY 1, 2
 ),
@@ -326,9 +327,10 @@ SELECT
   p.conversions,
 
   -- Friction signals (for Stalled/Friction sub-type detection)
-  COALESCE(f.rage_clicks, 0)  AS rage_clicks,
-  COALESCE(f.dead_clicks, 0)  AS dead_clicks,
-  COALESCE(f.form_errors, 0)  AS form_errors
+  COALESCE(f.rage_clicks, 0)        AS rage_clicks,
+  COALESCE(f.dead_clicks, 0)        AS dead_clicks,
+  COALESCE(f.form_errors, 0)        AS form_errors,
+  COALESCE(f.high_layout_shifts, 0) AS high_layout_shifts
 
 FROM breadth_metrics b
 JOIN depth_metrics d

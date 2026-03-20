@@ -514,6 +514,27 @@
       {
         "accountId": "0",
         "containerId": "0",
+        "tagId": "14",
+        "name": "BI - Layout Shift Detector",
+        "type": "html",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "html",
+            "value": "<script>\n(function () {\n  'use strict';\n  var CLS_THRESHOLD = 0.25;\n  if (typeof PerformanceObserver === 'undefined') return;\n  try {\n    if (!PerformanceObserver.supportedEntryTypes ||\n        PerformanceObserver.supportedEntryTypes.indexOf('layout-shift') === -1) return;\n  } catch (e) { return; }\n  var cumulativeCLS = 0;\n  var fired = false;\n  function elementSelector(el) {\n    if (!el || !el.tagName) return 'unknown';\n    var tag = el.tagName.toLowerCase();\n    var id = el.id ? '#' + String(el.id).slice(0, 50) : '';\n    var cls = el.className && typeof el.className === 'string'\n      ? '.' + el.className.trim().split(/\\s+/).slice(0, 2).join('.') : '';\n    return (tag + id + cls).slice(0, 150);\n  }\n  function largestSource(entry) {\n    if (!entry.sources || !entry.sources.length) return null;\n    var largest = entry.sources[0];\n    for (var i = 1; i < entry.sources.length; i++) {\n      var rect = entry.sources[i].currentRect;\n      var largestRect = largest.currentRect;\n      if (rect && largestRect) {\n        if (rect.width * rect.height > largestRect.width * largestRect.height) largest = entry.sources[i];\n      }\n    }\n    return largest.node || null;\n  }\n  var observer = new PerformanceObserver(function (list) {\n    if (fired) return;\n    var entries = list.getEntries();\n    var lastUnexpectedEntry = null;\n    for (var i = 0; i < entries.length; i++) {\n      if (entries[i].hadRecentInput) continue;\n      cumulativeCLS += entries[i].value;\n      lastUnexpectedEntry = entries[i];\n    }\n    if (cumulativeCLS > CLS_THRESHOLD && lastUnexpectedEntry) {\n      fired = true;\n      var sourceEl = largestSource(lastUnexpectedEntry);\n      window.dataLayer = window.dataLayer || [];\n      window.dataLayer.push({\n        event: 'high_layout_shift',\n        layout_shift_score: Math.round(cumulativeCLS * 1000) / 1000,\n        layout_shift_element: elementSelector(sourceEl),\n        layout_shift_url: window.location.pathname\n      });\n      observer.disconnect();\n    }\n  });\n  observer.observe({ type: 'layout-shift', buffered: true });\n})();\n</script>"
+          }
+        ],
+        "firingTriggerId": ["1"],
+        "consentSettings": {
+          "consentStatus": "NEEDED",
+          "consentType": {
+            "list": [{ "type": "TEMPLATE", "key": "consentType", "value": "analytics_storage" }]
+          }
+        }
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
         "tagId": "13",
         "name": "BI - Element Metadata Reader",
         "type": "html",

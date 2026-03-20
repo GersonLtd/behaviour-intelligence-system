@@ -143,13 +143,14 @@ This gives you all event tags, friction detectors, data layer variables, and con
 
 **6 custom dimensions** — registered in GA4 so the parameters are available in reports and BigQuery: `page_type`, `page_topic`, `conversion_stage`, `content_role`, `offer_id`, `traffic_source_group`.
 
-**Friction detection** — five GTM scripts (in the `gtm/` folder) detect UX problems in real time:
+**Friction detection** — six GTM scripts (in the `gtm/` folder) detect UX problems in real time:
 
 | Script | What it detects |
 |---|---|
 | `rage-click-detector.js` | 3+ rapid clicks on the same element — signals frustration |
 | `dead-click-detector.js` | Clicks on non-interactive elements — signals confusion |
 | `form-error-tracker.js` | Form validation failures — signals form friction |
+| `layout-shift-detector.js` | Cumulative Layout Shift > 0.25 — signals unexpected content movement (Chrome/Edge only) |
 | `traffic-source-classifier.js` | Groups traffic sources for source bias scoring |
 | `element-metadata-reader.js` | Reads element-level role and weight from clicked elements |
 

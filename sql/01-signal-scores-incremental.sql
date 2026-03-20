@@ -186,9 +186,10 @@ USING (
   friction_metrics AS (
     SELECT
       user_pseudo_id, session_id,
-      COUNTIF(event_name = 'rage_click')  AS rage_clicks,
-      COUNTIF(event_name = 'dead_click')  AS dead_clicks,
-      COUNTIF(event_name = 'form_error')  AS form_errors
+      COUNTIF(event_name = 'rage_click')        AS rage_clicks,
+      COUNTIF(event_name = 'dead_click')        AS dead_clicks,
+      COUNTIF(event_name = 'form_error')        AS form_errors,
+      COUNTIF(event_name = 'high_layout_shift') AS high_layout_shifts
     FROM mapped_events
     GROUP BY 1, 2
   ),
@@ -263,9 +264,10 @@ USING (
     p.form_starts,
     p.form_submits,
     p.conversions,
-    COALESCE(f.rage_clicks, 0)  AS rage_clicks,
-    COALESCE(f.dead_clicks, 0)  AS dead_clicks,
-    COALESCE(f.form_errors, 0)  AS form_errors
+    COALESCE(f.rage_clicks, 0)        AS rage_clicks,
+    COALESCE(f.dead_clicks, 0)        AS dead_clicks,
+    COALESCE(f.form_errors, 0)        AS form_errors,
+    COALESCE(f.high_layout_shifts, 0) AS high_layout_shifts
 
   FROM breadth_metrics b
   JOIN depth_metrics d
@@ -308,7 +310,8 @@ WHEN MATCHED THEN UPDATE SET
   conversions            = source.conversions,
   rage_clicks            = source.rage_clicks,
   dead_clicks            = source.dead_clicks,
-  form_errors            = source.form_errors
+  form_errors            = source.form_errors,
+  high_layout_shifts     = source.high_layout_shifts
 
 WHEN NOT MATCHED THEN INSERT (
   user_pseudo_id, session_id, session_start, session_date,
@@ -317,7 +320,7 @@ WHEN NOT MATCHED THEN INSERT (
   engagement_time_seconds, avg_scroll_percent, deep_engagement_events,
   dominant_topic_share, topic_switch_count, total_page_views,
   repeat_cluster_visits, raw_progression_sum, form_starts, form_submits,
-  conversions, rage_clicks, dead_clicks, form_errors
+  conversions, rage_clicks, dead_clicks, form_errors, high_layout_shifts
 ) VALUES (
   source.user_pseudo_id, source.session_id, source.session_start,
   source.session_date, source.traffic_source_group, source.breadth_score,
@@ -328,5 +331,6 @@ WHEN NOT MATCHED THEN INSERT (
   source.topic_switch_count, source.total_page_views,
   source.repeat_cluster_visits, source.raw_progression_sum,
   source.form_starts, source.form_submits, source.conversions,
-  source.rage_clicks, source.dead_clicks, source.form_errors
+  source.rage_clicks, source.dead_clicks, source.form_errors,
+  source.high_layout_shifts
 );

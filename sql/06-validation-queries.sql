@@ -76,7 +76,7 @@ ORDER BY avg_progression DESC;
 
 SELECT
   CASE
-    WHEN rage_clicks >= 3 OR dead_clicks >= 2 OR form_errors >= 2 THEN 'friction_detected'
+    WHEN rage_clicks >= 3 OR dead_clicks >= 2 OR form_errors >= 2 OR high_layout_shifts > 0 THEN 'friction_detected'
     WHEN rage_clicks > 0 OR dead_clicks > 0 OR form_errors > 0 THEN 'friction_below_threshold'
     ELSE 'no_friction'
   END AS friction_status,

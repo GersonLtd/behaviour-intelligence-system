@@ -48,7 +48,7 @@ USING (
         WHEN s.breadth_score BETWEEN 3 AND 6
           AND s.depth_score BETWEEN 4 AND 6
           AND s.progression_score <= 3
-          AND (s.rage_clicks >= 3 OR s.dead_clicks >= 2 OR s.form_errors >= 2)
+          AND (s.rage_clicks >= 3 OR s.dead_clicks >= 2 OR s.form_errors >= 2 OR s.high_layout_shifts > 0)
           THEN 'Stalled (Friction)'
         WHEN s.breadth_score BETWEEN 3 AND 6
           AND s.depth_score BETWEEN 4 AND 6

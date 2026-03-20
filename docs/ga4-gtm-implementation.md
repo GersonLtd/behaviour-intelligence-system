@@ -43,6 +43,7 @@ Required for Stalled (Friction) sub-type detection:
 | `rage_click` | Custom JS listener | 3+ rapid clicks on the same element within 2 seconds |
 | `dead_click` | Custom JS listener | Click on a non-interactive element with no system response |
 | `form_error` | Form validation failure | Validation error displayed to the user during form completion |
+| `high_layout_shift` | PerformanceObserver | Cumulative Layout Shift exceeds 0.25 during a page view (Chrome/Edge only; no-op in unsupported browsers) |
 
 ---
 

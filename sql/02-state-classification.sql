@@ -59,10 +59,12 @@ state_assignment AS (
 
       -- Priority 7a: Stalled (Friction) — UX failures blocking progress
       -- Friction thresholds mirrored in: src/classifier.js hasFriction(), sql/06-validation-queries.sql
+      -- high_layout_shifts uses > 0 (not a threshold) because the GTM detector fires at most once per page;
+      -- the JS classifier equivalently checks highLayoutShift === true (boolean).
       WHEN s.breadth_score BETWEEN 3 AND 6
         AND s.depth_score BETWEEN 4 AND 6
         AND s.progression_score <= 3
-        AND (s.rage_clicks >= 3 OR s.dead_clicks >= 2 OR s.form_errors >= 2)
+        AND (s.rage_clicks >= 3 OR s.dead_clicks >= 2 OR s.form_errors >= 2 OR s.high_layout_shifts > 0)
         THEN 'Stalled (Friction)'
 
       -- Priority 7b: Stalled — confusion/overload, no friction signals
