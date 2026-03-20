@@ -158,6 +158,26 @@ IF repeat_page_views >= 3 AND progression <= 2 THEN confidence -= 1
 
 ---
 
+## 10. Layout shift detection is unavailable on Safari and Firefox
+
+**What:** The Layout Shift Detector (`gtm/layout-shift-detector.js`) uses the `layout-shift` PerformanceObserver entry type, which is only supported in Chromium browsers (Chrome, Edge, Opera). Safari (all iOS browsers, macOS Safari) and Firefox do not implement it. The detector is a silent no-op in those browsers — no error, but no data.
+
+**The bias this creates:** An iPhone user and an Android user can experience the exact same broken, jumping page. The Android user gets classified as **Stalled (Friction)** because the layout shift event fires. The iPhone user gets classified as plain **Stalled** because the sensor doesn't exist on their device. This means the "Stalled (Friction)" state will naturally skew towards desktop and Android traffic — not because iOS users experience less friction, but because the instrument is blind on Apple devices.
+
+**Who needs to know:** Anyone consuming the Stalled vs Stalled (Friction) split in dashboards or audience segments. When comparing friction rates across device types or browsers, the absence of layout shift data on Safari/iOS must be accounted for. A low friction rate on iOS does not mean iOS users are having a better experience.
+
+**Mitigation options:**
+
+| Approach | Trade-off |
+|---|---|
+| **Segment friction reports by browser engine** | Simplest. Show friction breakdowns for Chromium-only traffic so the comparison is apples-to-apples. |
+| **Exclude layout shift from cross-browser comparisons** | Compare Stalled (Friction) only on rage clicks, dead clicks, and form errors when the audience includes Safari/Firefox. |
+| **Use CrUX or RUM data as a supplement** | Google's Chrome UX Report provides CLS data at the origin level, which can fill the gap directionally, though not at the individual session level. |
+
+**Should it be changed:** No code change needed — the detector correctly degrades to a no-op. The bias is inherent to browser API availability and must be handled at the analysis layer, not the collection layer.
+
+---
+
 ## Resolved
 
 Items that were identified as limitations and have since been fixed.
